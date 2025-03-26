@@ -8,10 +8,10 @@ class Player(GameSprite):
         self.speed = speed
 
         
-    def update(self):
+    def update(self,up,down):
         keys = key.get_pressed()
-        if self.rect.y > 0 and keys[K_w]:
+        if self.rect.y > 0 and keys[up]:
             self.rect.y -= self.speed
-        if self.rect.y < WIN_H - self.rect.height and keys[K_s]:
+        if self.rect.y < WIN_H - self.rect.height and keys[down]:
             self.rect.y += self.speed
             

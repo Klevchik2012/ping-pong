@@ -25,8 +25,8 @@ while game:
     player_left.draw(window)
     player_right.draw(window)
     cheese.draw(window)
-    player_left.update()
-    player_right.update()
+    player_left.update(K_w,K_s)
+    player_right.update(K_UP,K_DOWN)
     cheese.update()
     # слушать события и обрабатывать
     for e in event.get():
