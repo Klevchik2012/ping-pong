@@ -20,6 +20,13 @@ players = sprite.Group()
 players.add(player_left)
 players.add(player_right)
 cheese = Ball(CHEESE_IMG,(WIN_W - CHEESE_W)/2,(WIN_H - CHEESE_H)/2, CHEESE_W,CHEESE_H)
+
+font.init()
+
+title_font = font.SysFont('arial',70)
+win_left = title_font.render('выиграл левый игрок', True, DARC_BLUE)
+win_right = title_font.render('выиграл правый игрок', True,DARC_BLUE)
+
 # игровой цикл
 game = True
 while game:
@@ -35,6 +42,16 @@ while game:
             cheese, players, False
         ):
         cheese.speed_x *= -1
+
+    if cheese.rect.right > player_right.rect.x:
+        window.blit(win_left,(100,200))
+        finish = True
+        display.update()
+
+    if cheese.rect.x < player_left.rect.x:
+        window.blit(win_right,(100,200))
+        finish = True
+        display.update()
     # слушать события и обрабатывать
     for e in event.get():
         # выйти, если нажат "крестик"
