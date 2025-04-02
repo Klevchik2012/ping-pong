@@ -29,29 +29,43 @@ win_right = title_font.render('выиграл правый игрок', True,DAR
 
 # игровой цикл
 game = True
+finish = False
 while game:
-    window.fill(LIGHT_BLUE)
+    if not finish:
+        window.fill(LIGHT_BLUE)
 
-    players.draw(window)
-    cheese.draw(window)
-    player_left.update(K_w,K_s)
-    player_right.update(K_UP,K_DOWN)
-    cheese.update()
+        players.draw(window)
+        cheese.draw(window)
+        player_left.update(K_w,K_s)
+        player_right.update(K_UP,K_DOWN)
+        cheese.update()
 
-    if sprite.spritecollide(
-            cheese, players, False
-        ):
-        cheese.speed_x *= -1
+        if sprite.spritecollide(
+                cheese, players, False
+            ):
+            cheese.speed_x *= -1
 
-    if cheese.rect.right > player_right.rect.x:
-        window.blit(win_left,(100,200))
-        finish = True
-        display.update()
+        if cheese.rect.right > player_right.rect.right:
+            window.blit(win_left,(100,200))
+            finish = True
+            display.update()
 
-    if cheese.rect.x < player_left.rect.x:
-        window.blit(win_right,(100,200))
-        finish = True
-        display.update()
+        if cheese.rect.x < player_left.rect.x:
+            window.blit(win_right,(50,200))
+            finish = True
+            display.update()
+    else :
+        player_left.kill()
+        player_right.kill()
+        time.delay(3000)
+        player_left = Player(BAGET_IMG,5,(WIN_H - BAGET_H)/2, BAGET_W,BAGET_H)
+        # 
+        player_right = Player(BAGET_IMG,WIN_W - BAGET_W -5,(WIN_H - BAGET_H)/2, BAGET_W,BAGET_H)
+        players = sprite.Group()
+        players.add(player_left)
+        players.add(player_right)
+        cheese = Ball(CHEESE_IMG,(WIN_W - CHEESE_W)/2,(WIN_H - CHEESE_H)/2, CHEESE_W,CHEESE_H)
+        finish = False
     # слушать события и обрабатывать
     for e in event.get():
         # выйти, если нажат "крестик"
